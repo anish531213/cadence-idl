@@ -349,6 +349,11 @@ struct ReapplyEventsRequest {
   20: optional shared.ReapplyEventsRequest request
 }
 
+struct RefreshWorkflowTasksRequest {
+  10: optional string domainUIID
+  20: optional shared.RefreshWorkflowTasksRequest request
+}
+
 /**
 * HistoryService provides API to start a new long running workflow instance, as well as query and update the history
 * of workflow instances already created.
@@ -857,4 +862,17 @@ service HistoryService {
       6: ShardOwnershipLostError shardOwnershipLostError,
       7: shared.EntityNotExistsError entityNotExistError,
     )
+
+  /**
+  * RefreshWorkflowTasks refreshes all tasks of a workflow
+  **/
+  void RefreshWorkflowTasks(1: RefreshWorkflowTasksRequest request)
+     throws (
+       1: shared.BadRequestError badRequestError,
+       2: shared.InternalServiceError internalServiceError,
+       3: shared.DomainNotActiveError domainNotActiveError,
+       4: ShardOwnershipLostError shardOwnershipLostError,
+       5: shared.ServiceBusyError serviceBusyError,
+       6: shared.EntityNotExistsError entityNotExistError,
+     )
 }
